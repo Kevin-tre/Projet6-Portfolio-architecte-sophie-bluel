@@ -1,10 +1,21 @@
 const token = localStorage.getItem("token");
 let works = [];
 let categories = [];
+const logoutUser = () => {
+  localStorage.removeItem("token");
+  window.location.href = "./index.html";
+};
 
 const gallery = document.querySelector(".gallery");
 const filters = document.querySelector(".filters");
+
 if (token) {
+  const authButton = document.querySelector(".auth-button");
+  authButton.innerHTML = "";
+  const logoutButton = document.createElement("a");
+  logoutButton.innerHTML = "Logout";
+  logoutButton.addEventListener("click", logoutUser);
+  authButton.appendChild(logoutButton);
 }
 const getCategories = () => {
   fetch("http://localhost:5678/api/categories")
