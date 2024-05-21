@@ -19,27 +19,38 @@
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
-          <li><a href="./index.html">Acceuil</a></li>
-          <li><a href="./login.html">login</a></li>
-          <!-- <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li> -->
+          <li>projets</li>
+          <li>contact</li>
+          <li class="auth-button"><a href="./login.html">login</a></li>
+          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
     </header>
     <main>
-      <h1>Login</h1>
-      <form action="" method="get" class="form-login">
-        <div class="form-input">
-          <label for="email">Email: </label>
-          <input type="email" name="email" id="email" required />
-        </div>
-        <div class="form-input">
-          <label for="password">Mot de passe </label>
-          <input type="password" name="password" id="password" required />
-        </div>
-        <div class="form-button">
-          <input type="submit" value="S'identifier" />
-        </div>
-      </form>
+      <section id="login">
+        <h2 class="login-title">Log in</h2>
+        <form action="" method="get" class="form-login">
+          <div class="form-input">
+            <label for="email">E-mail: </label>
+            <input type="email" name="email" id="email" required />
+          </div>
+          <div class="form-input">
+            <label for="password">Mot de passe </label>
+            <input type="password" name="password" id="password" required />
+          </div>
+          <div class="form-button">
+            <input type="submit" value="Se connecter" />
+          </div>
+          <p class="forget-pw">Mot de passe oublié</p>
+        </form>
+      </section>
     </main>
+    <footer>
+      <nav>
+        <ul>
+          <li>Mentions Légales</li>
+        </ul>
+      </nav>
+    </footer>
   </body>
 </html>

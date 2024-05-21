@@ -8,14 +8,92 @@ const logoutUser = () => {
 
 const gallery = document.querySelector(".gallery");
 const filters = document.querySelector(".filters");
+const modalContainer = document.querySelector(".modal-container");
 
-if (token) {
+const closeModal = () => {
+  modalContainer.innerHTML = "";
+};
+const generateFirstModalContent = () => {
+  const modalContent = document.querySelector(".modal-content");
+  modalContent.innerHTML = "";
+  const title = document.createElement("h2");
+  title.innerHTML = "Gallerie Photos";
+  const button = document.createElement("button");
+  button.innerHTML = "Ajouter une photo";
+  button.addEventListener("click", generateSecondModalContent);
+  const closeButton = document.createElement("button");
+  closeButton.innerHTML = "Fermer";
+  closeButton.addEventListener("click", closeModal);
+  modalContent.appendChild(title);
+  modalContent.appendChild(button);
+  modalContent.appendChild(closeButton);
+};
+
+const generateSecondModalContent = () => {
+  const modalContent = document.querySelector(".modal-content");
+  modalContent.innerHTML = "";
+  const title = document.createElement("h2");
+  title.innerHTML = "Ajouter une photo";
+  const button = document.createElement("button");
+  button.innerHTML = "Retour";
+  button.addEventListener("click", generateFirstModalContent);
+  const closeButton = document.createElement("button");
+  closeButton.innerHTML = "Fermer";
+  closeButton.addEventListener("click", closeModal);
+  modalContent.appendChild(title);
+  modalContent.appendChild(button);
+  modalContent.appendChild(closeButton);
+};
+
+const generateModal = () => {
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  const modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
+  modal.appendChild(modalContent);
+  modalContainer.appendChild(modal);
+  generateFirstModalContent();
+};
+
+const generateLogoutButton = () => {
   const authButton = document.querySelector(".auth-button");
   authButton.innerHTML = "";
   const logoutButton = document.createElement("a");
   logoutButton.innerHTML = "Logout";
   logoutButton.addEventListener("click", logoutUser);
   authButton.appendChild(logoutButton);
+};
+
+const generateTopBar = () => {
+  const topBarContainer = document.querySelector(".top-bar-container");
+  const topBar = document.createElement("div");
+  topBar.className = "top-bar";
+  const icon = document.createElement("i");
+  icon.className = "fa-regular fa-pen-to-square edit-icon";
+  const span = document.createElement("span");
+  span.innerHTML = "Mode édition";
+  topBar.appendChild(icon);
+  topBar.appendChild(span);
+  topBarContainer.appendChild(topBar);
+};
+
+const generateEditButton = () => {
+  const projectTitle = document.querySelector(".project-title");
+  const editButton = document.createElement("div");
+  editButton.addEventListener("click", generateModal);
+  const icon = document.createElement("i");
+  icon.className = "fa-regular fa-pen-to-square";
+  const span = document.createElement("span");
+  span.innerHTML = "modifier";
+  editButton.appendChild(icon);
+  editButton.appendChild(span);
+  projectTitle.appendChild(editButton);
+};
+
+if (token) {
+  generateLogoutButton();
+  generateEditButton();
+  generateTopBar();
 }
 const getCategories = () => {
   fetch("http://localhost:5678/api/categories")

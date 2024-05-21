@@ -30,7 +30,7 @@ const loginUser = async (e) => {
     localStorage.setItem("token", data.token);
     window.location.href = "./index.html";
   } else {
-    alert("Vos identifiants de connexion sont incorrectes");
+    alert("Erreur dans l’identifiant ou le mot de passe");
   }
 };
 
