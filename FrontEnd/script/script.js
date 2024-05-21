@@ -17,12 +17,12 @@ const generateFirstModalContent = () => {
   const modalContent = document.querySelector(".modal-content");
   modalContent.innerHTML = "";
   const title = document.createElement("h2");
-  title.innerHTML = "Gallerie Photos";
+  title.innerHTML = "Gallerie Photo";
   const button = document.createElement("button");
   button.innerHTML = "Ajouter une photo";
   button.addEventListener("click", generateSecondModalContent);
-  const closeButton = document.createElement("button");
-  closeButton.innerHTML = "Fermer";
+  const closeButton = document.createElement("i");
+  closeButton.className = "fa-solid fa-xmark close-icon";
   closeButton.addEventListener("click", closeModal);
   modalContent.appendChild(title);
   modalContent.appendChild(button);
@@ -33,15 +33,15 @@ const generateSecondModalContent = () => {
   const modalContent = document.querySelector(".modal-content");
   modalContent.innerHTML = "";
   const title = document.createElement("h2");
-  title.innerHTML = "Ajouter une photo";
-  const button = document.createElement("button");
-  button.innerHTML = "Retour";
-  button.addEventListener("click", generateFirstModalContent);
-  const closeButton = document.createElement("button");
-  closeButton.innerHTML = "Fermer";
+  title.innerHTML = "Ajout photo";
+  const returnIcon = document.createElement("i");
+  returnIcon.className = "fa-solid fa-arrow-left return-icon";
+  returnIcon.addEventListener("click", generateFirstModalContent);
+  const closeButton = document.createElement("i");
+  closeButton.className = "fa-solid fa-xmark close-icon";
   closeButton.addEventListener("click", closeModal);
   modalContent.appendChild(title);
-  modalContent.appendChild(button);
+  modalContent.appendChild(returnIcon);
   modalContent.appendChild(closeButton);
 };
 
@@ -82,7 +82,7 @@ const generateEditButton = () => {
   const editButton = document.createElement("div");
   editButton.addEventListener("click", generateModal);
   const icon = document.createElement("i");
-  icon.className = "fa-regular fa-pen-to-square";
+  icon.className = "fa-regular fa-pen-to-square edit-icon";
   const span = document.createElement("span");
   span.innerHTML = "modifier";
   editButton.appendChild(icon);

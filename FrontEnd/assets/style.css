@@ -400,7 +400,7 @@ footer nav ul {
 
 }
 
-.edit-icon {
+.edition-icon {
 	color: white;
 	margin-right: 10px;
 }
@@ -417,6 +417,11 @@ footer nav ul {
 	margin-right: 20px;
 }
 
+.edit-icon {
+	margin-right: 10px;
+}
+
+/* MODAL STYLE */
 .modal {
 	position: fixed;
 	height: 100vh;
@@ -434,4 +439,30 @@ footer nav ul {
 	min-height: 650px;
 	background-color: white;
 	border-radius: 10px;
+	position: relative;
+}
+
+.modal-content h2 {
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 26px;
+	text-align: center;
+	color: #000000;
+	margin: 70px;
+
+}
+
+.close-icon {
+	position: absolute;
+	top: 25px;
+	right: 35px;
+	color: #000000;
+	font-size: 17px;
+}
+
+.return-icon {
+	position: absolute;
+	top: 20px;
+	left: 25px;
+	font-size: 20px;
 }
