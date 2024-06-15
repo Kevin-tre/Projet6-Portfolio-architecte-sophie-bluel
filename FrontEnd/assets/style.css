@@ -179,12 +179,16 @@ nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-
 }
 
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+}
+
+nav li a {
+	text-decoration: none;
+	color: black;
 }
 
 li:hover {
@@ -294,8 +298,14 @@ footer nav li {
 	font-size: 14px;
 	font-weight: 300;
 	font-family: 'Work Sans';
+}
+
+.bottom {
+	font-size: 14px;
+	font-weight: 300;
+	font-family: 'Work Sans';
 	position: absolute;
-	bottom: 12px;
+	bottom: 20px;
 }
 
 /* Bouton filtres */
@@ -385,11 +395,6 @@ footer nav li {
 .form-button input {
 	width: 179px;
 	height: 36px;
-}
-
-.auth-button a {
-	text-decoration: none;
-	color: black;
 }
 
 .forget-pw {
