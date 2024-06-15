@@ -1,14 +1,17 @@
 const token = localStorage.getItem("token");
 let works = [];
 let categories = [];
+
+const gallery = document.querySelector(".gallery");
+const filters = document.querySelector(".filters");
+const modalContainer = document.querySelector(".modal-container");
+
 const logoutUser = () => {
   localStorage.removeItem("token");
   window.location.href = "./index.html";
 };
 
-const gallery = document.querySelector(".gallery");
-const filters = document.querySelector(".filters");
-const modalContainer = document.querySelector(".modal-container");
+
 
 const closeModal = () => {
   modalContainer.innerHTML = "";
@@ -57,10 +60,10 @@ const addWork = async () => {
   const image = document.querySelector(".input-image").files[0];
   const title = document.querySelector(".input-title").value;
   const category = document.querySelector(".category-select").value;
-  if (!image || !title || !category) {
+  if (!image || !title || !category ) {
     return alert("Veuillez remplir tous les champs");
   }
-  var formData = new FormData();
+  const formData = new FormData();
   formData.append("image", image);
   formData.append("title", title);
   formData.append("category", category);
@@ -96,6 +99,51 @@ const generateSecondModalContent = () => {
   inputImage.type = "file";
   inputImage.className = "input-image";
   inputImage.id = "input-image";
+  
+
+  const label = document.createElement("label");
+  label.htmlFor = "input-image";
+  label.className = "label-add-picture";
+  const pictureButton = document.createElement("div");
+  pictureButton.className = "add-picture-container";
+  const addPicture = document.createElement("div");
+  const pictureCard = document.createElement("i");
+  pictureCard.className = "fa-regular fa-image picture-card";
+  addPicture.className = "add-picture";
+  addPicture.innerHTML = "+ Ajouter photo";
+  const sizeDescription = document.createElement("p");
+  sizeDescription.innerHTML = "jpg, png : 4mo max";
+
+  const titleLabel = document.createElement("label");
+  titleLabel.innerHTML = "Titre";
+  titleLabel.className = "input-label"; 
+
+  const inputTitle = document.createElement("input");
+  inputTitle.className = "input-title";
+  
+
+  const categoryLabel = document.createElement("label")
+  categoryLabel.innerHTML = "Catégorie"
+  categoryLabel.className = "input-label";
+  const categorySelect = document.createElement("select");
+  categorySelect.className = "category-select";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  categorySelect.appendChild(defaultOption);
+  for (let i = 0; i < categories.length; i++) {
+    const option = document.createElement("option");
+    option.value = categories[i].id;
+    option.innerHTML = categories[i].name;
+    categorySelect.appendChild(option);
+  }
+  inputTitle.addEventListener("change", () => {
+    if (inputImage.files[0] && inputTitle.value && categorySelect.value) {
+      button.className = "add-picture-button";
+    }
+  });
   inputImage.addEventListener("change", () => {
     if (inputImage.files[0]) {
       if (
@@ -115,45 +163,23 @@ const generateSecondModalContent = () => {
         label.innerHTML = "";
         label.appendChild(addImage);
 
-        if (inputTitle.value) {
+        if (inputTitle.value  && categorySelect.value) {
           button.className = "add-picture-button";
         }
       }
     }
   });
-
-  const label = document.createElement("label");
-  label.htmlFor = "input-image";
-  label.className = "label-add-picture";
-  const pictureButton = document.createElement("div");
-  pictureButton.className = "add-picture-container";
-  const addPicture = document.createElement("div");
-  const pictureCard = document.createElement("i");
-  pictureCard.className = "fa-regular fa-image picture-card";
-  addPicture.className = "add-picture";
-  addPicture.innerHTML = "+ Ajouter photo";
-  const sizeDescription = document.createElement("p");
-  sizeDescription.innerHTML = "jpg, png : 4mo max";
-  const inputTitle = document.createElement("input");
-  inputTitle.className = "input-title";
-  inputTitle.addEventListener("change", () => {
-    if (inputImage.files[0] && inputTitle.value) {
-      //changer classe button
+  categorySelect.addEventListener("change", () => {
+    if (inputImage.files[0] && inputTitle.value && categorySelect.value) {
       button.className = "add-picture-button";
     }
   });
-  const categorySelect = document.createElement("select");
-  categorySelect.className = "category-select";
-  for (let i = 0; i < categories.length; i++) {
-    const option = document.createElement("option");
-    option.value = categories[i].id;
-    option.innerHTML = categories[i].name;
-    categorySelect.appendChild(option);
-  }
   const button = document.createElement("button");
   button.innerHTML = "Valider";
   button.className = "add-picture-button-disable";
   button.addEventListener("click", addWork);
+  const line = document.createElement("span");
+  line.className = "line";
   modalContent.appendChild(title);
   formContainer.appendChild(inputImage);
   pictureButton.appendChild(pictureCard);
@@ -161,9 +187,12 @@ const generateSecondModalContent = () => {
   pictureButton.appendChild(sizeDescription);
   label.appendChild(pictureButton);
   formContainer.appendChild(label);
+  formContainer.appendChild(titleLabel);
   formContainer.appendChild(inputTitle);
+  formContainer.appendChild(categoryLabel);
   formContainer.appendChild(categorySelect);
   modalContent.appendChild(formContainer);
+  modalContent.appendChild(line);
   modalContent.appendChild(button);
   modalContent.appendChild(returnIcon);
   modalContent.appendChild(closeIcon);
@@ -172,7 +201,9 @@ const generateSecondModalContent = () => {
 const generateModal = () => {
   const modal = document.createElement("div");
   modal.className = "modal";
+  modal.addEventListener("click",closeModal)
   const modalContent = document.createElement("div");
+  modalContent.addEventListener("click",(e) => {e.stopPropagation()})
   modalContent.className = "modal-content";
   modal.appendChild(modalContent);
   modalContainer.appendChild(modal);
@@ -183,7 +214,7 @@ const generateLogoutButton = () => {
   const authButton = document.querySelector(".auth-button");
   authButton.innerHTML = "";
   const logoutButton = document.createElement("a");
-  logoutButton.innerHTML = "Logout";
+  logoutButton.innerHTML = "logout";
   logoutButton.addEventListener("click", logoutUser);
   authButton.appendChild(logoutButton);
 };
@@ -260,15 +291,13 @@ const getWorks = async () => {
 };
 
 const displayWorks = (categoryId) => {
-  // console.log(categoryId);
-  let fileredWorks = [];
+  let filteredWorks = [];
   if (categoryId === 0) {
-    fileredWorks = works;
+    filteredWorks = [...works];
   } else {
-    fileredWorks = works.filter((work) => work.categoryId === categoryId);
+    filteredWorks = works.filter((work) => work.categoryId === categoryId);
   }
   const filter_button = document.getElementsByClassName("flt_btn");
-  // console.log(filter_button[1]);
   for (let i = 0; i < filter_button.length; i++) {
     if (i === categoryId) {
       filter_button[i].className = "filter_button_active flt_btn";
@@ -277,13 +306,13 @@ const displayWorks = (categoryId) => {
     }
   }
   gallery.innerHTML = "";
-  for (let i = 0; i < fileredWorks.length; i++) {
+  for (let i = 0; i < filteredWorks.length; i++) {
     const figure = document.createElement("figure");
     const img = document.createElement("img");
-    img.src = fileredWorks[i].imageUrl;
-    img.alt = fileredWorks[i].title;
+    img.src = filteredWorks[i].imageUrl;
+    img.alt = filteredWorks[i].title;
     const figcaption = document.createElement("figcaption");
-    figcaption.innerHTML = fileredWorks[i].title;
+    figcaption.innerHTML = filteredWorks[i].title;
     figure.appendChild(img);
     figure.appendChild(figcaption);
     gallery.appendChild(figure);

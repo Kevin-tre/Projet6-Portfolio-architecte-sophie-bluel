@@ -10,7 +10,6 @@ const loginUser = async (e) => {
   const emailInput = document.querySelector("#email");
   const passwordInput = document.querySelector("#password");
   if (!emailInput.value || !passwordInput.value) {
-    // || = ou
     alert("Veuillez renseigner votre email et votre mot de passe");
   }
   const body = {
