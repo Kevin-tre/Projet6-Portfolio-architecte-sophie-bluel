@@ -12,7 +12,6 @@ const logoutUser = () => {
 };
 
 
-
 const closeModal = () => {
   modalContainer.innerHTML = "";
 };
